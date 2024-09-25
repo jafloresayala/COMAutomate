@@ -5,38 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Descargar y Redirigir</title>
     <script type="text/javascript">
-        function getParameterByName(name) {
-            const url = window.location.href;
-            name = name.replace(/[\[\]]/g, "\\$&");
-            const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-                results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, " "));
-        }
-
-        function descargarPDF() {
-            // Obtener los parámetros de la URL
-            const pdfURL = getParameterByName('pdf');
-            const smartsheetURL = getParameterByName('smartsheet');
-
-            if (pdfURL) {
-                // Primero redirigir a la descarga del PDF
-                window.location.href = pdfURL;
-
-                // Luego, después de 3 segundos, redirigir a Smartsheet
-                setTimeout(function() {
-                    if (smartsheetURL) {
-                        window.location.href = smartsheetURL;
-                    }
-                }, 3000);
-            } else {
-                alert("No se encontró el PDF para descargar.");
-            }
+        function redirigirASmartsheet(smartsheetURL) {
+            setTimeout(function(){
+                window.location.href = smartsheetURL;
+            }, 3000);  // Redirige después de 3 segundos
         }
     </script>
 </head>
-<body onload="descargarPDF()">
-    <h1>Procesando la descarga y redirección...</h1>
+<body>
+    <h1>Descargar el PDF</h1>
+    <p>Presiona el siguiente enlace para descargar el PDF. Después de descargarlo, serás redirigido automáticamente a la fila correspondiente en Smartsheet.</p>
+    
+    <!-- Enlace para descargar el PDF -->
+    <a href="#" id="downloadLink" onclick="redirigirASmartsheet(smartsheetURL)">Descargar PDF</a>
+
+    <script type="text/javascript">
+        // Obtener los parámetros de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const pdfURL = urlParams.get('pdf');
+        const smartsheetURL = urlParams.get('smartsheet');
+
+        // Establecer el enlace del PDF en el botón de descarga
+        document.getElementById('downloadLink').href = pdfURL;
+    </script>
 </body>
 </html>
