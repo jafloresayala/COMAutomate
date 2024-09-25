@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargar y Redirigir</title>
+    <script type="text/javascript">
+        function descargarPDF() {
+            // Descargar el PDF
+            window.location.href = "URL_DEL_PDF";
+            
+            // Redirigir a Smartsheet después de la descarga
+            setTimeout(function(){
+                window.location.href = "URL_DE_SMARTSHEET";
+            }, 3000);  // Esperar 3 segundos antes de redirigir
+        }
+    </script>
+</head>
+<body onload="descargarPDF()">
+    <h1>Procesando...</h1>
+</body>
+</html>
