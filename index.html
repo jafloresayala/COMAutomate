@@ -5,18 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Descargar y Redirigir</title>
     <script type="text/javascript">
+        function getParameterByName(name) {
+            const url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
         function descargarPDF() {
-            // Descargar el PDF
-            window.location.href = "URL_DEL_PDF";
-            
-            // Redirigir a Smartsheet después de la descarga
-            setTimeout(function(){
-                window.location.href = "URL_DE_SMARTSHEET";
-            }, 3000);  // Esperar 3 segundos antes de redirigir
+            // Obtener los parámetros de la URL
+            const pdfURL = getParameterByName('pdf');
+            const smartsheetURL = getParameterByName('smartsheet');
+
+            if (pdfURL) {
+                // Primero redirigir a la descarga del PDF
+                window.location.href = pdfURL;
+
+                // Luego, después de 3 segundos, redirigir a Smartsheet
+                setTimeout(function() {
+                    if (smartsheetURL) {
+                        window.location.href = smartsheetURL;
+                    }
+                }, 3000);
+            } else {
+                alert("No se encontró el PDF para descargar.");
+            }
         }
     </script>
 </head>
 <body onload="descargarPDF()">
-    <h1>Procesando...</h1>
+    <h1>Procesando la descarga y redirección...</h1>
 </body>
 </html>
