@@ -6,9 +6,10 @@
     <title>Descargar y Redirigir</title>
     <script type="text/javascript">
         function redirigirASmartsheet(smartsheetURL) {
+            // Esperar 5 segundos (5000 ms) antes de redirigir a Smartsheet
             setTimeout(function(){
                 window.location.href = smartsheetURL;
-            }, 3000);  // Redirige después de 3 segundos
+            }, 5000);  // Cambié el tiempo de espera a 5 segundos
         }
     </script>
 </head>
